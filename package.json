@@ -1,0 +1,17 @@
+{
+    "name": "yd-fetch",
+    "version": "1.0.0",
+    "description": "## yd请求库",
+    "main": "index.ts",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "@yd/utils": "https://gitee.com/herowyd1994/yd-utils.git"
+    },
+    "devDependencies": {
+        "prettier": "^3.2.5"
+    }
+}
