@@ -1,5 +1,5 @@
 {
-    "name": "yd-fetch",
+    "name": "@yd/fetch",
     "version": "1.0.0",
     "description": "## yd请求库",
     "main": "index.ts",
