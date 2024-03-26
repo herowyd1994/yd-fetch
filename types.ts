@@ -8,7 +8,7 @@ export interface Config {
     logProps?: Partial<{
         color: string;
         disable: boolean;
-        handler: () => void;
+        handler: (response: Response) => void;
     }>;
     adapter?<D>(config: RequestConfig): Promise<Response<D>>;
     onHeader?(headers: Record<string, any>): Promise<Record<string, any>> | Record<string, any>;

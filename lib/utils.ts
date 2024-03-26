@@ -17,9 +17,8 @@ export const defaultConfig: Config = {
     transformRequestUrl: ({ url, query = {} }) => `${url}${transformUrlParams(query)}`,
     transformRequestBody: ({ body }) => (body ? JSON.stringify(body) : body)
 };
-export const log = (
-    status: 'Success' | 'Fail',
-    {
+export const log = (status: 'Success' | 'Fail', response: Response) => {
+    const {
         errMsg,
         data,
         config: {
@@ -30,8 +29,7 @@ export const log = (
             body,
             headers
         }
-    }: Response
-) => {
+    } = response;
     if (disable) {
         return;
     }
@@ -40,6 +38,6 @@ export const log = (
     !isNone(body) && console.log('%cbody', `color:${color}`, body);
     const value = data?.data ?? data ?? errMsg;
     console.log(...(typeof value === 'object' ? [value] : [`%c${value}`, `color:${color};`]));
-    handler?.();
+    handler?.(response);
     console.groupEnd();
 };
