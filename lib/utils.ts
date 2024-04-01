@@ -21,14 +21,7 @@ export const log = (status: 'Success' | 'Fail', response: Response) => {
     const {
         errMsg,
         data,
-        config: {
-            url,
-            method,
-            logProps: { color = '#C73737', disable, handler } = {},
-            query,
-            body,
-            headers
-        }
+        config: { url, method, logProps: { color = '#C73737', disable, handler } = {}, query, body }
     } = response;
     if (disable) {
         return;
