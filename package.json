@@ -8,12 +8,12 @@
     },
     "repository": {
         "type": "git",
-        "url": "https://gitee.com/herowyd1994/yd-fetch.git"
+        "url": "git@github.com:herowyd1994/yd-fetch.git"
     },
     "author": "~Wyd丶",
     "license": "ISC",
     "dependencies": {
-        "@yd/utils": "https://gitee.com/herowyd1994/yd-utils.git"
+        "@yd/utils": "https://github.com/herowyd1994/yd-utils.git"
     },
     "devDependencies": {
         "prettier": "^3.2.5"

@@ -2,9 +2,9 @@
 # yarn lockfile v1
 
 
-"@yd/utils@https://gitee.com/herowyd1994/yd-utils.git":
+"@yd/utils@https://github.com/herowyd1994/yd-utils.git":
   version "1.0.0"
-  resolved "https://gitee.com/herowyd1994/yd-utils.git#65bcbb4fc9c03f976c50057e64928c0bbb89f638"
+  resolved "https://github.com/herowyd1994/yd-utils.git#e6a333994515dcee3dc4d90d74cff81c9f370a6e"
 
 prettier@^3.2.5:
   version "3.2.5"
