@@ -4,24 +4,28 @@ import { RequestConfig } from '../types';
 
 export default async (config: RequestConfig) => {
     const { method, headers, transformRequestUrl, transformRequestBody } = config;
+    let status: number;
+    let header: Headers;
     try {
         const res = await fetch(transformRequestUrl!(config), {
             method,
             headers,
             body: transformRequestBody!(config)
         });
+        const { status: s, headers: h, statusText } = res;
+        status = s;
+        header = h;
         const data = await res.json();
-        const { status, headers: h } = res;
-        data.code = data.code ?? status;
-        data.msg = data.msg ?? data.error;
+        const { code, msg, error } = data;
+        data.code = code ?? s;
+        data.msg = msg ?? error;
         return {
             ...res,
+            statusText: statusText || data.msg,
             data,
-            headers: (h as any).map,
-            errMsg: data.msg,
             config
         };
     } catch (err: any) {
-        return Promise.reject({ errMsg: err.message, config });
+        return Promise.reject({ status, header, errMsg: err.message, config });
     }
 };

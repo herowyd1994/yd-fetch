@@ -53,7 +53,14 @@ export class Request {
             !disable && console.timeEnd(u);
             return data!;
         } catch (response: any) {
-            toast && response.config.onError(response);
+            const {
+                status,
+                data: { code },
+                config: { authorizationCode, onLogout, onError }
+            } = response;
+            (authorizationCode!.includes(status) || authorizationCode!.includes(code)) &&
+                onLogout!(response);
+            toast && onError(response);
             log('Fail', response);
             !disable && console.timeEnd(u);
             return Promise.reject(response);

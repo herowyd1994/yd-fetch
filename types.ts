@@ -25,8 +25,7 @@ export interface Response<D = any> {
     };
     status: number;
     statusText: string;
-    errMsg: string;
-    headers?: Record<string, string>;
+    headers: Headers;
     config: RequestConfig;
 }
 export interface RequestConfig extends Config {

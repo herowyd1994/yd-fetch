@@ -35,12 +35,10 @@ export const requestInterceptor = async ({
 };
 export const responseInterceptor = async (response: Response) => {
     const {
-        data: { code },
         status,
-        config: { authorizationCode, onLogout }
+        data: { code }
     } = response;
     if (status! >= 400 || code !== 0) {
-        (status === 401 || authorizationCode!.includes(code)) && onLogout!(response);
         return Promise.reject(response);
     }
     log('Success', response);
