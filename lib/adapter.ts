@@ -24,6 +24,12 @@ export default async (config: RequestConfig) => {
         };
     } catch (err: any) {
         const { status, statusText, headers } = res;
-        return Promise.reject({ status, headers, statusText: err.message ?? statusText, config });
+        return Promise.reject({
+            status,
+            statusText: err.message ?? statusText,
+            headers,
+            data: {},
+            config
+        });
     }
 };
