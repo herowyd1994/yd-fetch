@@ -18,11 +18,11 @@ export interface Config {
     transformRequestBody?(response: RequestConfig): any;
 }
 export interface Response<D = any> {
-    data: Partial<{
+    data?: {
         code: number;
-        data: D;
+        data?: D;
         msg: string;
-    }>;
+    };
     status: number;
     statusText: string;
     headers: Headers;

@@ -28,7 +28,6 @@ export default async (config: RequestConfig) => {
             status,
             statusText: err.message ?? statusText,
             headers,
-            data: {},
             config
         });
     }

@@ -55,10 +55,10 @@ export class Request {
         } catch (response: any) {
             const {
                 status,
-                data: { code },
+                data,
                 config: { authorizationCode, onLogout, onError }
             } = response;
-            (authorizationCode!.includes(status) || authorizationCode!.includes(code)) &&
+            (authorizationCode!.includes(status) || authorizationCode!.includes(data?.code)) &&
                 onLogout!(response);
             toast && onError(response);
             log('Fail', response);
