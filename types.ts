@@ -24,7 +24,7 @@ export interface Response<D = any> {
         msg: string;
     };
     status: number;
-    statusText: string;
+    errMsg: string;
     headers: Headers;
     config: RequestConfig;
 }

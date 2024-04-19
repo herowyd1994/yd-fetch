@@ -12,14 +12,14 @@ export const defaultConfig: Config = {
     adapter,
     onHeader: (headers) =>
         Object.assign(headers, { Authorization: localStorage.getItem('Authorization') }),
-    onError: ({ statusText }) => alert(statusText),
+    onError: ({ errMsg }) => alert(errMsg),
     onLogout: () => localStorage.removeItem('Authorization'),
     transformRequestUrl: ({ url, query = {} }) => `${url}${transformUrlParams(query)}`,
     transformRequestBody: ({ body }) => (body ? JSON.stringify(body) : body)
 };
 export const log = (status: 'Success' | 'Fail', response: Response) => {
     const {
-        statusText,
+        errMsg,
         data,
         config: { url, method, logProps: { color = '#C73737', disable, handler } = {}, query, body }
     } = response;
@@ -29,7 +29,7 @@ export const log = (status: 'Success' | 'Fail', response: Response) => {
     console.group(`${status}【${method}】请求接口：${url}`);
     !isNone(query) && console.log('%cquery', `color:${color}`, query);
     !isNone(body) && console.log('%cbody', `color:${color}`, body);
-    const value = data?.data ?? data ?? statusText;
+    const value = data?.data ?? data ?? errMsg;
     console.log(...(typeof value === 'object' ? [value] : [`%c${value}`, `color:${color};`]));
     handler?.(response);
     console.groupEnd();

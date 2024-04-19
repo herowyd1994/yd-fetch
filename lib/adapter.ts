@@ -11,23 +11,22 @@ export default async (config: RequestConfig) => {
             headers,
             body: transformRequestBody!(config)
         });
-        const { status, headers: h, statusText } = res;
+        const { status, statusText } = res;
         const data = await res.json();
-        const { code, msg, error } = data;
+        const { code, msg } = data;
         data.code = code ?? status;
-        data.msg = msg ?? error;
         return {
             ...res,
-            statusText: statusText || data.msg,
             data,
+            status,
+            errMsg: statusText ?? msg,
             config
         };
     } catch (err: any) {
-        const { status, statusText, headers } = res;
+        const { statusText } = res;
         return Promise.reject({
-            status,
-            statusText: err.message ?? statusText,
-            headers,
+            ...res,
+            errMsg: err.message ?? statusText,
             config
         });
     }
