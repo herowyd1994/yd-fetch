@@ -5,7 +5,8 @@ import {
     Config,
     RequestInterceptor,
     ResponseInterceptor,
-    RequestMethod
+    RequestMethod,
+    Response
 } from '../types';
 import { Interceptor } from './interceptors';
 import { defaultConfig, log } from './utils';
@@ -36,7 +37,8 @@ export class Request {
             config: c,
             interceptors: { request, response },
             replaceUrlParams,
-            mergeParams
+            mergeParams,
+            errorHandler
         } = this;
         config = { method, url, ...c, ...config };
         const { url: u, toast, logProps: { disable } = {} } = config;
@@ -53,15 +55,7 @@ export class Request {
             !disable && console.timeEnd(u);
             return data!;
         } catch (response: any) {
-            const {
-                status,
-                data,
-                config: { authorizationCode, onLogout, onError }
-            } = response;
-            (authorizationCode!.includes(status) || authorizationCode!.includes(data?.code)) &&
-                onLogout!(response);
-            toast && onError(response);
-            log('Fail', response);
+            errorHandler(response);
             !disable && console.timeEnd(u);
             return Promise.reject(response);
         }
@@ -87,5 +81,20 @@ export class Request {
         } else {
             config.body = body ? Object.assign(body, params) : params;
         }
+    }
+    private errorHandler(response: Response) {
+        const {
+            status,
+            data,
+            config: { authCode, toast, onLogout, onError }
+        } = response;
+        const res = authCode.find(({ code }) => code === status || code === data?.code);
+        if (res) {
+            onLogout!(response);
+            onError!({ ...response, ...res });
+        } else {
+            toast && onError!(response);
+        }
+        log('Fail', response);
     }
 }

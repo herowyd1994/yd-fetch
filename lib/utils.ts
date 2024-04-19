@@ -7,7 +7,7 @@ import adapter from './adapter';
 export const defaultConfig: Config = {
     baseURL: '',
     headers: { 'Content-Type': 'application/json' },
-    authorizationCode: [401, 402, 403, 409],
+    authCode: [{ code: 401, errMsg: '用户信息已过期，请重新登录' }],
     toast: true,
     adapter,
     onHeader: (headers) =>

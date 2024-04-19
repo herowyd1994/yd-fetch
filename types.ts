@@ -3,7 +3,10 @@
 export interface Config {
     baseURL: string;
     headers?: Record<string, string>;
-    authorizationCode?: number[];
+    authCode?: {
+        code: number;
+        errMsg: string;
+    }[];
     toast?: boolean;
     logProps?: Partial<{
         color: string;
