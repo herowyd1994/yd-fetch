@@ -41,7 +41,7 @@ export class Request {
             errorHandler
         } = this;
         config = { method, url, ...c, ...config };
-        const { url: u, toast, logProps: { disable } = {} } = config;
+        const { url: u, logProps: { disable } = {} } = config;
         !disable && console.time(u);
         params = deepClone(params);
         config.url = replaceUrlParams(u!, params);
