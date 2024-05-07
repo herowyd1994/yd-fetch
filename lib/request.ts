@@ -88,7 +88,7 @@ export class Request {
             data,
             config: { authCode, toast, onLogout, onError }
         } = response;
-        const res = authCode.find(({ code }) => code === status || code === data?.code);
+        const res = authCode!.find(({ code }) => code === status || code === data?.code);
         if (res) {
             onLogout!(response);
             onError!({ ...response, ...res });
