@@ -19,7 +19,7 @@ export default async (config: RequestConfig) => {
             ...res,
             data,
             status,
-            errMsg: statusText ?? msg,
+            errMsg: msg ?? statusText,
             config
         };
     } catch (err: any) {
