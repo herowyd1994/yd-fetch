@@ -21,14 +21,14 @@ export interface Config {
     transformRequestBody?(response: RequestConfig): any;
 }
 export interface Response<D = any> {
+    status: number;
+    headers: Headers;
     data?: {
         code: number;
         data?: D;
         msg: string;
     };
-    status: number;
     errMsg: string;
-    headers: Headers;
     config: RequestConfig;
 }
 export interface RequestConfig extends Config {

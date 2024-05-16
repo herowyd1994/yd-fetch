@@ -49,11 +49,9 @@ export class Request {
         config = await request.notify(config);
         try {
             const res = await config.adapter!<D>(config as RequestConfig);
-            const {
-                data: { data }
-            } = await response.notify(res);
+            const { data } = await response.notify(res);
             !disable && console.timeEnd(u);
-            return data!;
+            return data!.data!;
         } catch (response: any) {
             errorHandler(response);
             !disable && console.timeEnd(u);

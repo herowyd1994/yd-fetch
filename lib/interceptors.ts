@@ -34,11 +34,8 @@ export const requestInterceptor = async ({
     };
 };
 export const responseInterceptor = async (response: Response) => {
-    const {
-        status,
-        data: { code }
-    } = response;
-    if (status >= 400 || code !== 0) {
+    const { status, data } = response;
+    if (status >= 400 || data!.code !== 0) {
         return Promise.reject(response);
     }
     log('Success', response);
