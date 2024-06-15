@@ -1,5 +1,5 @@
 {
-    "arrowParens": "always",
+    "arrowParens": "avoid",
     "bracketSameLine": false,
     "bracketSpacing": true,
     "semi": true,
@@ -11,7 +11,7 @@
     "singleAttributePerLine": true,
     "htmlWhitespaceSensitivity": "css",
     "vueIndentScriptAndStyle": true,
-    "proseWrap": "preserve",
+    "proseWrap": "always",
     "insertPragma": true,
     "printWidth": 100,
     "requirePragma": false,

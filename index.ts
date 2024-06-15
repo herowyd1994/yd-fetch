@@ -11,7 +11,7 @@ export const createFetch = (config: Config) => {
     const instance = new Request(config);
     instance.interceptors.request.use(requestInterceptor);
     instance.interceptors.response.use(responseInterceptor);
-    fetch = (fetchConfig) => {
+    fetch = fetchConfig => {
         const { method, url, ...opts } = fetchConfig;
         return instance[method === 'delete' ? 'del' : method](url, void 0, {
             ...config,
