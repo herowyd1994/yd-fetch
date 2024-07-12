@@ -25,9 +25,7 @@ export const useFetch = () => {
         (obj, key) => {
             const fn: MethodFn = async (url, params, { defaultValue, ...config } = {}) => {
                 const res = await (fetch as Fetch & Request)[key](url, params, config);
-                return defaultValue && typeof defaultValue === 'object' ?
-                        Object.assign(defaultValue!, res)
-                    :   res;
+                return defaultValue && typeof defaultValue === 'object' ? Object.assign(defaultValue!, res) : res;
             };
             return { ...obj, [key]: fn };
         },

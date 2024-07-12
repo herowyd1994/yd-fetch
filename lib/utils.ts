@@ -10,8 +10,7 @@ export const defaultConfig: Config = {
     authCode: [{ code: 401, errMsg: '用户信息已过期，请重新登录' }],
     toast: true,
     adapter,
-    onHeader: headers =>
-        Object.assign(headers, { Authorization: localStorage.getItem('Authorization') }),
+    onHeader: headers => Object.assign(headers, { Authorization: localStorage.getItem('Authorization') }),
     onError: ({ errMsg }) => alert(errMsg),
     onLogout: () => localStorage.removeItem('Authorization'),
     transformRequestUrl: ({ url, query = {} }) => `${url}${transformUrlParams(query)}`,

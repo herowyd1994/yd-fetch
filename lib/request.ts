@@ -1,13 +1,6 @@
 /** @format */
 
-import {
-    RequestConfig,
-    Config,
-    RequestInterceptor,
-    ResponseInterceptor,
-    RequestMethod,
-    Response
-} from '../types';
+import { RequestConfig, Config, RequestInterceptor, ResponseInterceptor, RequestMethod, Response } from '../types';
 import { Interceptor } from './interceptors';
 import { defaultConfig, log } from './utils';
 import { deepClone } from '@yd/utils';
@@ -19,11 +12,9 @@ export class Request {
         response: new Interceptor<ResponseInterceptor>()
     };
     public get: RequestMethod = (url, params, config) => this.onRequest('GET', url, params, config);
-    public post: RequestMethod = (url, params, config) =>
-        this.onRequest('POST', url, params, config);
+    public post: RequestMethod = (url, params, config) => this.onRequest('POST', url, params, config);
     public put: RequestMethod = (url, params, config) => this.onRequest('PUT', url, params, config);
-    public del: RequestMethod = (url, params, config) =>
-        this.onRequest('DELETE', url, params, config);
+    public del: RequestMethod = (url, params, config) => this.onRequest('DELETE', url, params, config);
     constructor(config?: Config) {
         Object.assign(this.config, config);
     }
