@@ -5,26 +5,26 @@ import { Request } from './lib/request';
 import { defaultConfig } from './lib/utils';
 import { requestInterceptor, responseInterceptor } from './lib/interceptors';
 
-let fetch: Fetch;
+let fetch: Fetch & Request;
 
 export const createFetch = (config: Config) => {
     const instance = new Request(config);
     instance.interceptors.request.use(requestInterceptor);
     instance.interceptors.response.use(responseInterceptor);
-    fetch = fetchConfig => {
-        const { method, url, ...opts } = fetchConfig;
-        return instance[method === 'delete' ? 'del' : method](url, void 0, {
-            ...config,
-            ...opts
-        });
-    };
-    return Object.assign(fetch, instance);
+    return (fetch = Object.assign(
+        ({ method, url, ...opts }) =>
+            instance[method === 'delete' ? 'del' : method](url, void 0, {
+                ...config,
+                ...opts
+            }),
+        instance
+    ));
 };
 export const useFetch = () => {
     const methods = (['get', 'post', 'put', 'del'] as MethodKeys[]).reduce(
         (obj, key) => {
             const fn: MethodFn = async (url, params, { defaultValue, ...config } = {}) => {
-                const res = await (fetch as Fetch & Request)[key](url, params, config);
+                const res = await fetch[key](url, params, config);
                 return defaultValue && typeof defaultValue === 'object' ? Object.assign(defaultValue!, res) : res;
             };
             return { ...obj, [key]: fn };
@@ -33,7 +33,7 @@ export const useFetch = () => {
     );
     return {
         ...methods,
-        instance: fetch as Fetch & Request,
+        fetch,
         defaultConfig
     };
 };
