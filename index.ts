@@ -1,6 +1,6 @@
 /** @format */
 
-import { Config, Fetch, MethodKeys, MethodFn } from './types';
+import { Config, Fetch, Methods, MethodFn } from './types';
 import { Request } from './lib/request';
 import { defaultConfig } from './lib/utils';
 import { requestInterceptor, responseInterceptor } from './lib/interceptors';
@@ -13,24 +13,18 @@ export const createFetch = (config: Config) => {
     instance.interceptors.response.use(responseInterceptor);
     return (fetch = Object.assign(
         ({ method, url, ...opts }) =>
-            instance[method === 'delete' ? 'del' : method](url, void 0, {
-                ...config,
-                ...opts
-            }),
+            instance[method === 'delete' ? 'del' : method](url, void 0, { ...config, ...opts }),
         instance
     ));
 };
 export const useFetch = () => {
-    const methods = (['get', 'post', 'put', 'del'] as MethodKeys[]).reduce(
-        (obj, key) => {
-            const fn: MethodFn = async (url, params, { defaultValue, ...config } = {}) => {
-                const res = await fetch[key](url, params, config);
-                return defaultValue && typeof defaultValue === 'object' ? Object.assign(defaultValue!, res) : res;
-            };
-            return { ...obj, [key]: fn };
-        },
-        {} as Record<MethodKeys, MethodFn>
-    );
+    const methods = ['get', 'post', 'put', 'del'].reduce((obj, key) => {
+        const fn: MethodFn = async (url, params, { defaultValue, ...config } = {}) => {
+            const res = await fetch[key](url, params, config);
+            return defaultValue && typeof defaultValue === 'object' ? Object.assign(defaultValue, res) : res;
+        };
+        return { ...obj, [key]: fn };
+    }, {} as Methods);
     return {
         ...methods,
         fetch,

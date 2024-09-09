@@ -49,7 +49,7 @@ interface FetchConfig extends Omit<RequestConfig, 'baseURL' | 'method'> {
     baseURL?: string;
     method: 'get' | 'post' | 'put' | 'delete';
 }
-export type MethodKeys = 'get' | 'post' | 'put' | 'del';
+export type Methods = Record<'get' | 'post' | 'put' | 'del', MethodFn>;
 export type MethodFn = <D = any>(
     url: string,
     params?: Record<string, any>,

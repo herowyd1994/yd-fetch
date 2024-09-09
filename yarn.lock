@@ -4,7 +4,7 @@
 
 "@yd/utils@https://github.com/herowyd1994/yd-utils.git":
   version "1.0.0"
-  resolved "https://github.com/herowyd1994/yd-utils.git#f99606b5280e6a1461797a28363bc85035cb8369"
+  resolved "https://github.com/herowyd1994/yd-utils.git#0aa678ba1050425c92f992d64c4077f60fcc2238"
 
 prettier@^3.2.5:
   version "3.2.5"
