@@ -43,7 +43,7 @@ export class Request {
             const { data } = await response.notify(res);
             !disable && console.timeEnd(u);
             return data!.data!;
-        } catch (response: any) {
+        } catch (response) {
             errorHandler(response);
             !disable && console.timeEnd(u);
             return Promise.reject(response);
