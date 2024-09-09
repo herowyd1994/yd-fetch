@@ -4,7 +4,11 @@ import { RequestConfig } from '../types';
 
 export default async (config: RequestConfig) => {
     const { method, headers, transformRequestUrl, transformRequestBody } = config;
-    const res = await fetch(transformRequestUrl!(config), { method, headers, body: transformRequestBody!(config) });
+    const res = await fetch(transformRequestUrl!(config), {
+        method,
+        headers,
+        body: transformRequestBody!(config)
+    });
     const { status, statusText } = res;
     try {
         const data = await res.json();

@@ -14,7 +14,14 @@ export class Interceptor<I extends Function> {
         return params;
     }
 }
-export const requestInterceptor = async ({ query, headers, onHeader, baseURL, url, ...config }: RequestConfig) => {
+export const requestInterceptor = async ({
+    query,
+    headers,
+    onHeader,
+    baseURL,
+    url,
+    ...config
+}: RequestConfig) => {
     baseURL = baseURL.endsWith('/') ? baseURL.slice(0, -1) : baseURL;
     url = url.startsWith('/') ? url.slice(1) : url;
     return {
