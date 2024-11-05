@@ -37,8 +37,8 @@ export interface RequestConfig extends Config {
     query?: Record<string, any>;
     body?: Record<string, any>;
 }
-export type RequestInterceptor = (request: RequestConfig) => Promise<RequestConfig>;
-export type ResponseInterceptor = (response: Response) => Promise<Response>;
+export type RequestInterceptor = (request: RequestConfig) => Promise<RequestConfig> | RequestConfig;
+export type ResponseInterceptor = (response: Response) => Promise<Response> | Response;
 export type RequestMethod = <D = any>(
     url: string,
     params?: Record<string, any>,
