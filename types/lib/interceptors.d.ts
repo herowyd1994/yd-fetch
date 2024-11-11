@@ -14,7 +14,7 @@ export declare const requestInterceptor: ({ query, headers, onHeader, baseURL, u
     body?: Record<string, any>;
     authCode?: {
         code: number;
-        errMsg: string;
+        errMsg?: string;
     }[];
     toast?: boolean;
     logProps?: Partial<{

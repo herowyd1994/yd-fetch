@@ -3,7 +3,7 @@ export interface Config {
     headers?: Record<string, string>;
     authCode?: {
         code: number;
-        errMsg: string;
+        errMsg?: string;
     }[];
     toast?: boolean;
     logProps?: Partial<{
