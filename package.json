@@ -17,7 +17,6 @@
         "@yd/utils": "https://github.com/herowyd1994/yd-utils.git"
     },
     "devDependencies": {
-        "@types/node": "^22.8.6",
         "prettier": "^3.3.3",
         "typescript": "^5.6.3"
     }
