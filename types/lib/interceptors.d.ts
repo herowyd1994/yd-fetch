@@ -1,7 +1,7 @@
 import { RequestConfig, Response } from '../types';
 export declare class Interceptor<I extends Function> {
     private interceptors;
-    use: (interceptor: I) => Set<I>;
+    use(interceptor: I): this;
     notify<P>(params: P): Promise<P>;
 }
 export declare const requestInterceptor: ({ query, headers, onHeader, baseURL, url, ...config }: RequestConfig) => Promise<{

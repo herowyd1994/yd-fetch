@@ -45,7 +45,7 @@ export class Request {
         !disable && console.time(u);
         params = deepClone(params);
         config.url = replaceUrlParams(u!, params);
-        mergeParams(method, params, config);
+        mergeParams(params, config);
         config = await request.notify(config);
         try {
             const res = await config.adapter!<D>(config as RequestConfig);
@@ -68,12 +68,8 @@ export class Request {
             return value;
         });
     }
-    private mergeParams(
-        method: RequestConfig['method'],
-        params: Record<string, any> | undefined,
-        config: Partial<RequestConfig>
-    ) {
-        const { query, body } = config;
+    private mergeParams(params: Record<string, any> | undefined, config: Partial<RequestConfig>) {
+        const { method, query, body } = config;
         if (method === 'GET' || method === 'DELETE') {
             config.query = query ? Object.assign(query, params) : params;
         } else {

@@ -21,7 +21,7 @@ export class Request {
         !disable && console.time(u);
         params = deepClone(params);
         config.url = replaceUrlParams(u, params);
-        mergeParams(method, params, config);
+        mergeParams(params, config);
         config = await request.notify(config);
         try {
             const res = await config.adapter(config);
@@ -45,8 +45,8 @@ export class Request {
             return value;
         });
     }
-    mergeParams(method, params, config) {
-        const { query, body } = config;
+    mergeParams(params, config) {
+        const { method, query, body } = config;
         if (method === 'GET' || method === 'DELETE') {
             config.query = query ? Object.assign(query, params) : params;
         }

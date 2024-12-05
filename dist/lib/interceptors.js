@@ -2,7 +2,10 @@ import { filterNone } from '@yd/utils';
 import { log } from './utils';
 export class Interceptor {
     interceptors = new Set();
-    use = (interceptor) => this.interceptors.add(interceptor);
+    use(interceptor) {
+        this.interceptors.add(interceptor);
+        return this;
+    }
     async notify(params) {
         for (const interceptor of this.interceptors) {
             params = await interceptor(params);

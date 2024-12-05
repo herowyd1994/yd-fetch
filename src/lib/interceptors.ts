@@ -6,7 +6,10 @@ import { log } from './utils';
 
 export class Interceptor<I extends Function> {
     private interceptors = new Set<I>();
-    public use = (interceptor: I) => this.interceptors.add(interceptor);
+    public use(interceptor: I) {
+        this.interceptors.add(interceptor);
+        return this;
+    }
     public async notify<P>(params: P) {
         for (const interceptor of this.interceptors) {
             params = await interceptor(params);
