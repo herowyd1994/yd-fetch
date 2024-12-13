@@ -46,7 +46,7 @@ export class Request {
             return value;
         });
     }
-    async mergeParams(params, config) {
+    async mergeParams(params = {}, config) {
         const { method, query, body, formatParams } = config;
         if (method === 'GET' || method === 'DELETE') {
             config.query = await formatParams(query ? Object.assign(query, params) : params);

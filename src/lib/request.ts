@@ -50,7 +50,7 @@ export class Request {
         try {
             const res = await config.adapter!(config as RequestConfig<D>);
             let { data: { data } = {} } = await response.notify(res);
-            data = await formatData(data);
+            data = await formatData!(data);
             !disable && console.timeEnd(u);
             return data;
         } catch (response) {
@@ -69,15 +69,12 @@ export class Request {
             return value;
         });
     }
-    private async mergeParams(
-        params: Record<string, any> | undefined,
-        config: Partial<RequestConfig>
-    ) {
+    private async mergeParams(params: Record<string, any> = {}, config: Partial<RequestConfig>) {
         const { method, query, body, formatParams } = config;
         if (method === 'GET' || method === 'DELETE') {
-            config.query = await formatParams(query ? Object.assign(query, params) : params);
+            config.query = await formatParams!(query ? Object.assign(query, params) : params);
         } else {
-            config.body = await formatParams(body ? Object.assign(body, params) : params);
+            config.body = await formatParams!(body ? Object.assign(body, params) : params);
         }
     }
     private errorHandler(response: Response) {
