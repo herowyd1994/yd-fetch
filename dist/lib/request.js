@@ -14,7 +14,7 @@ export class Request {
     constructor(config) {
         Object.assign(this.config, config);
     }
-    async onRequest(method, url, params, config) {
+    async onRequest(method, url, params = {}, config) {
         const { config: c, interceptors: { request, response }, replaceUrlParams, mergeParams, errorHandler } = this;
         config = { method, url, ...c, ...config };
         const { url: u, logProps: { disable } = {}, formatData } = config;
@@ -36,7 +36,7 @@ export class Request {
             return Promise.reject(response);
         }
     }
-    replaceUrlParams(url, params = {}) {
+    replaceUrlParams(url, params) {
         return url.replace(/\{(\w+)\}/g, (_, key) => {
             if (!Reflect.has(params, key)) {
                 return key;
@@ -46,7 +46,7 @@ export class Request {
             return value;
         });
     }
-    async mergeParams(params = {}, config) {
+    async mergeParams(params, config) {
         const { method, query, body, formatParams } = config;
         if (method === 'GET' || method === 'DELETE') {
             config.query = await formatParams(query ? Object.assign(query, params) : params);

@@ -30,7 +30,7 @@ export class Request {
     private async onRequest<D>(
         method: RequestConfig<D>['method'],
         url: string,
-        params?: Record<string, any>,
+        params: Record<string, any> = {},
         config?: Partial<RequestConfig<D>>
     ): Promise<D> {
         const {
@@ -46,10 +46,10 @@ export class Request {
         params = deepClone(params);
         config.url = replaceUrlParams(u!, params);
         await mergeParams(params, config);
-        config = await request.notify(config);
+        config = await request.notify<Partial<RequestConfig<D>>>(config);
         try {
             const res = await config.adapter!(config as RequestConfig<D>);
-            let { data: { data } = {} } = await response.notify(res);
+            let { data: { data } = {} } = await response.notify<Response<D>>(res);
             data = await formatData!(data);
             !disable && console.timeEnd(u);
             return data;
@@ -59,7 +59,7 @@ export class Request {
             return Promise.reject(response);
         }
     }
-    private replaceUrlParams(url: string, params: Record<string, any> = {}) {
+    private replaceUrlParams(url: string, params: Record<string, any>) {
         return url.replace(/\{(\w+)\}/g, (_, key) => {
             if (!Reflect.has(params, key)) {
                 return key;
@@ -69,7 +69,7 @@ export class Request {
             return value;
         });
     }
-    private async mergeParams(params: Record<string, any> = {}, config: Partial<RequestConfig>) {
+    private async mergeParams(params: Record<string, any>, config: Partial<RequestConfig>) {
         const { method, query, body, formatParams } = config;
         if (method === 'GET' || method === 'DELETE') {
             config.query = await formatParams!(query ? Object.assign(query, params) : params);
