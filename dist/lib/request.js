@@ -17,17 +17,18 @@ export class Request {
     async onRequest(method, url, params, config) {
         const { config: c, interceptors: { request, response }, replaceUrlParams, mergeParams, errorHandler } = this;
         config = { method, url, ...c, ...config };
-        const { url: u, logProps: { disable } = {} } = config;
+        const { url: u, logProps: { disable } = {}, formatData } = config;
         !disable && console.time(u);
         params = deepClone(params);
         config.url = replaceUrlParams(u, params);
-        mergeParams(params, config);
+        await mergeParams(params, config);
         config = await request.notify(config);
         try {
             const res = await config.adapter(config);
-            const { data } = await response.notify(res);
+            let { data: { data } = {} } = await response.notify(res);
+            data = await formatData(data);
             !disable && console.timeEnd(u);
-            return data.data;
+            return data;
         }
         catch (response) {
             errorHandler(response);
@@ -45,13 +46,13 @@ export class Request {
             return value;
         });
     }
-    mergeParams(params, config) {
-        const { method, query, body } = config;
+    async mergeParams(params, config) {
+        const { method, query, body, formatParams } = config;
         if (method === 'GET' || method === 'DELETE') {
-            config.query = query ? Object.assign(query, params) : params;
+            config.query = await formatParams(query ? Object.assign(query, params) : params);
         }
         else {
-            config.body = body ? Object.assign(body, params) : params;
+            config.body = await formatParams(body ? Object.assign(body, params) : params);
         }
     }
     errorHandler(response) {

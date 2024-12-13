@@ -7,7 +7,7 @@ export declare const createFetch: (config: Config) => (({ method, url, ...opts }
 }) => any) & Request;
 export declare const useFetch: () => {
     fetch: Fetch & Request;
-    defaultConfig: Config;
+    defaultConfig: Config<any>;
     del: MethodFn;
     get: MethodFn;
     post: MethodFn;

@@ -10,7 +10,9 @@ export const defaultConfig = {
     onError: ({ errMsg }) => alert(errMsg),
     onLogout: () => localStorage.removeItem('Authorization'),
     transformRequestUrl: ({ url, query = {} }) => `${url}${transformUrlParams(query)}`,
-    transformRequestBody: ({ body }) => (body ? JSON.stringify(body) : body)
+    transformRequestBody: ({ body }) => (body ? JSON.stringify(body) : body),
+    formatParams: params => params,
+    formatData: data => data
 };
 export const log = (status, response) => {
     const { errMsg, data, config: { url, method, logProps: { color = '#C73737', disable, handler } = {}, query, body } } = response;

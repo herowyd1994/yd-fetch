@@ -14,8 +14,18 @@ export default async (config: RequestConfig) => {
         const data = await res.json();
         const { code, msg } = data;
         data.code = code ?? status;
-        return { ...res, status, data, errMsg: msg ?? statusText, config };
+        return {
+            ...res,
+            status,
+            data,
+            errMsg: msg ?? statusText,
+            config
+        };
     } catch ({ message }) {
-        return Promise.reject({ ...res, errMsg: message ?? statusText, config });
+        return Promise.reject({
+            ...res,
+            errMsg: message ?? statusText,
+            config
+        });
     }
 };

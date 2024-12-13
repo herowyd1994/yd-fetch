@@ -22,10 +22,12 @@ export declare const requestInterceptor: ({ query, headers, onHeader, baseURL, u
         disable: boolean;
         handler: (response: Response) => void;
     }>;
-    adapter?<D>(config: RequestConfig): Promise<Response<D>>;
+    adapter?(config: RequestConfig<any>): Promise<Response<any>>;
     onLogout?(response: Response): void;
     onError?(response: Response): void;
-    transformRequestUrl?(response: RequestConfig): string;
-    transformRequestBody?(response: RequestConfig): any;
+    transformRequestUrl?(response: RequestConfig<any>): string;
+    transformRequestBody?(response: RequestConfig<any>): any;
+    formatParams?(params: Record<string, any>): Promise<Record<string, any>> | Record<string, any>;
+    formatData?(data: any): any;
 }>;
 export declare const responseInterceptor: (response: Response) => Promise<Response<any>>;

@@ -28,10 +28,10 @@ export class Request {
         Object.assign(this.config, config);
     }
     private async onRequest<D>(
-        method: RequestConfig['method'],
+        method: RequestConfig<D>['method'],
         url: string,
         params?: Record<string, any>,
-        config?: Partial<RequestConfig>
+        config?: Partial<RequestConfig<D>>
     ): Promise<D> {
         const {
             config: c,
@@ -41,17 +41,18 @@ export class Request {
             errorHandler
         } = this;
         config = { method, url, ...c, ...config };
-        const { url: u, logProps: { disable } = {} } = config;
+        const { url: u, logProps: { disable } = {}, formatData } = config;
         !disable && console.time(u);
         params = deepClone(params);
         config.url = replaceUrlParams(u!, params);
-        mergeParams(params, config);
+        await mergeParams(params, config);
         config = await request.notify(config);
         try {
-            const res = await config.adapter!<D>(config as RequestConfig);
-            const { data } = await response.notify(res);
+            const res = await config.adapter!(config as RequestConfig<D>);
+            let { data: { data } = {} } = await response.notify(res);
+            data = await formatData(data);
             !disable && console.timeEnd(u);
-            return data!.data!;
+            return data;
         } catch (response) {
             errorHandler(response);
             !disable && console.timeEnd(u);
@@ -68,12 +69,15 @@ export class Request {
             return value;
         });
     }
-    private mergeParams(params: Record<string, any> | undefined, config: Partial<RequestConfig>) {
-        const { method, query, body } = config;
+    private async mergeParams(
+        params: Record<string, any> | undefined,
+        config: Partial<RequestConfig>
+    ) {
+        const { method, query, body, formatParams } = config;
         if (method === 'GET' || method === 'DELETE') {
-            config.query = query ? Object.assign(query, params) : params;
+            config.query = await formatParams(query ? Object.assign(query, params) : params);
         } else {
-            config.body = body ? Object.assign(body, params) : params;
+            config.body = await formatParams(body ? Object.assign(body, params) : params);
         }
     }
     private errorHandler(response: Response) {

@@ -3,7 +3,7 @@ declare const _default: (config: RequestConfig) => Promise<{
     status: number;
     data: any;
     errMsg: any;
-    config: RequestConfig;
+    config: RequestConfig<any>;
     headers: Headers;
     ok: boolean;
     redirected: boolean;
