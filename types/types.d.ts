@@ -46,7 +46,8 @@ interface FetchConfig extends Omit<RequestConfig, 'baseURL' | 'method'> {
     method: 'get' | 'post' | 'put' | 'delete';
 }
 export type Methods = Record<'get' | 'post' | 'put' | 'del', MethodFn>;
-export type MethodFn = <D = any>(url: string, params?: Record<string, any>, config?: Partial<RequestConfig<D>> & {
-    defaultValue?: D;
-}) => Promise<D>;
+export type MethodFn = <D = any>(url: string, params?: Record<string, any>, config?: MethodFnConfig<D>) => Promise<D>;
+export type MethodFnConfig<D = any> = Partial<RequestConfig<D> & {
+    defaultValue: D;
+}>;
 export {};
