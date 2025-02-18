@@ -37,7 +37,7 @@ export class Request {
         }
     }
     replaceUrlParams(url, params) {
-        return url.replace(/\{(\w+)\}/g, (_, key) => {
+        return url.replace(/\{(\w+)}/g, (_, key) => {
             if (!Reflect.has(params, key)) {
                 return key;
             }
