@@ -46,7 +46,7 @@ export class Request {
         params = deepClone(params);
         config.url = replaceUrlParams(u!, params);
         await mergeParams(params, config);
-        config = await request.notify<Partial<RequestConfig<D>>>(config);
+        config = await request.notify<Partial<RequestConfig<D>>>(config, true);
         try {
             const res = await config.adapter!(config as RequestConfig<D>);
             let { data: { data } = {} } = await response.notify<Response<D>>(res);
@@ -60,7 +60,7 @@ export class Request {
         }
     }
     private replaceUrlParams(url: string, params: Record<string, any>) {
-        return url.replace(/\{(\w+)\}/g, (_, key) => {
+        return url.replace(/\{(\w+)}/g, (_, key) => {
             if (!Reflect.has(params, key)) {
                 return key;
             }

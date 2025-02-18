@@ -2,7 +2,7 @@ import { RequestConfig, Response } from '../types';
 export declare class Interceptor<I extends Function> {
     private interceptors;
     use(interceptor: I): this;
-    notify<P>(params: P): Promise<P>;
+    notify<P>(params: P, reverse?: boolean): Promise<P>;
 }
 export declare const requestInterceptor: ({ query, headers, onHeader, baseURL, url, ...config }: RequestConfig) => Promise<{
     onHeader: (headers: Record<string, any>) => Promise<Record<string, any>> | Record<string, any>;

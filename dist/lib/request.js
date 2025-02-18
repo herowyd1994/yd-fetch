@@ -22,7 +22,7 @@ export class Request {
         params = deepClone(params);
         config.url = replaceUrlParams(u, params);
         await mergeParams(params, config);
-        config = await request.notify(config);
+        config = await request.notify(config, true);
         try {
             const res = await config.adapter(config);
             let { data: { data } = {} } = await response.notify(res);

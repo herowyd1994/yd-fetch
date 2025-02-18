@@ -10,8 +10,9 @@ export class Interceptor<I extends Function> {
         this.interceptors.add(interceptor);
         return this;
     }
-    public async notify<P>(params: P) {
-        for (const interceptor of this.interceptors) {
+    public async notify<P>(params: P, reverse: boolean = false) {
+        const arr = reverse ? [...this.interceptors].reverse() : this.interceptors;
+        for (const interceptor of arr) {
             params = await interceptor(params);
         }
         return params;

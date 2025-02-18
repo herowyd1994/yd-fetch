@@ -6,8 +6,9 @@ export class Interceptor {
         this.interceptors.add(interceptor);
         return this;
     }
-    async notify(params) {
-        for (const interceptor of this.interceptors) {
+    async notify(params, reverse = false) {
+        const arr = reverse ? [...this.interceptors].reverse() : this.interceptors;
+        for (const interceptor of arr) {
             params = await interceptor(params);
         }
         return params;
