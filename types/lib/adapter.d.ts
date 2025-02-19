@@ -15,6 +15,7 @@ declare const _default: (config: RequestConfig) => Promise<{
     bodyUsed: boolean;
     arrayBuffer(): Promise<ArrayBuffer>;
     blob(): Promise<Blob>;
+    bytes(): Promise<Uint8Array>;
     formData(): Promise<FormData>;
     json(): Promise<any>;
     text(): Promise<string>;

@@ -32,7 +32,7 @@ export const log = (status: 'Success' | 'Fail', response: Response) => {
     !isNone(query) && console.log('%cquery', `color:${color}`, query);
     !isNone(body) && console.log('%cbody', `color:${color}`, body);
     const value = data?.data ?? data ?? errMsg;
-    console.log(...(typeof value === 'object' ? [value] : [`%c${value}`, `color:${color};`]));
+    console.log(...(typeof value === 'object' ? [value] : [`%c${value}`, `color:${color}`]));
     handler?.(response);
     console.groupEnd();
 };
