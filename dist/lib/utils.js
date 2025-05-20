@@ -15,6 +15,7 @@ export const defaultConfig = {
     formatData: data => data
 };
 export const log = (status, response) => {
+    var _a, _b;
     const { errMsg, data, config: { url, method, logProps: { color = '#C73737', disable, handler } = {}, query, body } } = response;
     if (disable) {
         return;
@@ -22,8 +23,8 @@ export const log = (status, response) => {
     console.group(`${status}【${method}】请求接口：${url}`);
     !isNone(query) && console.log('%cquery', `color:${color}`, query);
     !isNone(body) && console.log('%cbody', `color:${color}`, body);
-    const value = data?.data ?? data ?? errMsg;
+    const value = (_b = (_a = data === null || data === void 0 ? void 0 : data.data) !== null && _a !== void 0 ? _a : data) !== null && _b !== void 0 ? _b : errMsg;
     console.log(...(typeof value === 'object' ? [value] : [`%c${value}`, `color:${color}`]));
-    handler?.(response);
+    handler === null || handler === void 0 ? void 0 : handler(response);
     console.groupEnd();
 };

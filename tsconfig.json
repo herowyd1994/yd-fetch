@@ -1,11 +1,15 @@
 {
     "compilerOptions": {
-        "target": "esnext",
+        "target": "ES6",
         "moduleResolution": "node",
         "outDir": "dist",
         "removeComments": true,
         "declaration": true,
-        "declarationDir": "types"
+        "lib": [
+            "ESNext",
+            "DOM",
+            "DOM.Iterable"
+        ]
     },
     "exclude": [
         "node_modules",
