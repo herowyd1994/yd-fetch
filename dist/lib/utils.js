@@ -20,7 +20,7 @@ export const log = (status, response) => {
     if (disable) {
         return;
     }
-    console.group(`${status}【${method}】请求接口：${url}`);
+    console.groupCollapsed(`${status}【${method.toUpperCase()}】请求接口：${url}`);
     !isNone(query) && console.log('%cquery', `color:${color}`, query);
     !isNone(body) && console.log('%cbody', `color:${color}`, body);
     const value = (_b = (_a = data === null || data === void 0 ? void 0 : data.data) !== null && _a !== void 0 ? _a : data) !== null && _b !== void 0 ? _b : errMsg;

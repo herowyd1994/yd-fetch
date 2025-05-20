@@ -28,7 +28,7 @@ export const log = (status: 'Success' | 'Fail', response: Response) => {
     if (disable) {
         return;
     }
-    console.group(`${status}【${method}】请求接口：${url}`);
+    console.groupCollapsed(`${status}【${method.toUpperCase()}】请求接口：${url}`);
     !isNone(query) && console.log('%cquery', `color:${color}`, query);
     !isNone(body) && console.log('%cbody', `color:${color}`, body);
     const value = data?.data ?? data ?? errMsg;
